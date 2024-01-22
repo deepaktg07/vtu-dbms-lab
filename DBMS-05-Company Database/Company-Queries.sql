@@ -8,11 +8,14 @@ WHERE E.Name = 'Scott';
 
 --Show the resulting salaries if every employee working on the ‘IoT’ project is given a 10 percent raise.
 
-SELECT E.NAME, 1.1*E.SALARY AS INCR_SAL
-FROM EMPLOYEE E, WORKS_ON W, PROJECT P
-WHERE E.SSN=W.SSN
-AND W.PNO=P.PNO
-AND P.PNAME='IOT';
+UPDATE EMPLOYEE
+SET Salary = Salary * 1.10
+WHERE SSN IN (
+    SELECT W.SSN
+    FROM WORKS_ON W
+    JOIN PROJECT P ON W.PNo = P.PNo
+    WHERE P.PName = 'IoT'
+);
 
 --Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department
 
