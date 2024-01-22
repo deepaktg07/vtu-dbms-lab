@@ -24,16 +24,25 @@ WHERE SALESMAN_ID IN (
 
 --List all the salesman and indicate those who have and don’t have customers in their cities (Use UNION operation.)
 
-SELECT S.SALESMAN_ID, S.NAME, C.CUST_NAME, S.COMMISSION
-FROM SALESMAN S, CUSTOMER C
-WHERE S.CITY=C.CITY
-UNION
-SELECT S.SALESMAN_ID,S.NAME,'NO MATCH',S.COMMISSION
+-- Salesmen with customers in their cities
+SELECT S.SALESMAN_ID, S.NAME, 'Has Customers' AS Status
 FROM SALESMAN S
-WHERE CITY NOT IN 
-(SELECT CITY
-FROM CUSTOMER)
-ORDER BY 1 ASC;
+WHERE EXISTS (
+    SELECT 1
+    FROM CUSTOMER C
+    WHERE C.CITY = S.CITY
+);
+
+-- Salesmen without customers in their cities
+UNION
+
+SELECT S.SALESMAN_ID, S.NAME, 'No Customers' AS Status
+FROM SALESMAN S
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM CUSTOMER C
+    WHERE C.CITY = S.CITY
+);
 
 -----------------------------------
 
