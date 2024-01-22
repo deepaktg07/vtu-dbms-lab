@@ -32,11 +32,19 @@ WHERE
 
 --Retrieve the name of each employee who works on all the projects controlled by department number 5 (use NOT EXISTS operator).
 
-SELECT E.NAME
+SELECT E.Name
 FROM EMPLOYEE E
-WHERE NOT EXISTS(SELECT PNO FROM PROJECT WHERE DNO='5' AND PNO NOT IN (SELECT
-PNO FROM WORKS_ON
-WHERE E.SSN=SSN));
+WHERE NOT EXISTS (
+    SELECT P.PNo
+    FROM PROJECT P
+    WHERE P.DNo = 5
+    AND NOT EXISTS (
+        SELECT W.SSN
+        FROM WORKS_ON W
+        WHERE W.SSN = E.SSN
+        AND W.PNo = P.PNo
+    )
+);
 
 --For each department that has more than five employees, retrieve the department number and the number of its employees who are making more than Rs. 6,00,000.
 
