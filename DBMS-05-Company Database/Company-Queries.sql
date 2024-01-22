@@ -1,16 +1,10 @@
 --Make a list of all project numbers for projects that involve an employee whose last name is ‘Scott’, either as a worker or as a manager of the department that controls the project.
 
-SELECT DISTINCT P.PNO
-FROM PROJECT P, DEPARTMENT D, EMPLOYEE E
-WHERE E.DNO=D.DNO
-AND D.MGR_SSN=E.SSN
-AND E.NAME LIKE '%SCOTT'
-UNION
-SELECT DISTINCT P1.PNO
-FROM PROJECT P1, WORKS_ON W, EMPLOYEE E1
-WHERE P1.PNO=W.PNO
-AND E1.SSN=W.SSN
-AND E1.NAME LIKE '%SCOTT';
+SELECT DISTINCT P.PNo, P.PName
+FROM PROJECT P
+JOIN WORKS_ON W ON P.PNo = W.PNo
+JOIN EMPLOYEE E ON W.SSN = E.SSN OR E.SSN = P.MgrSSN
+WHERE E.Name = 'Scott';
 
 --Show the resulting salaries if every employee working on the ‘IoT’ project is given a 10 percent raise.
 
