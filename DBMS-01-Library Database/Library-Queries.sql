@@ -1,11 +1,19 @@
 --Retrieve details of all books in the library – id, title, name of publisher, authors,
 --number of copies in each Programme, etc. 
 
-SELECT B.BOOK_ID, B.TITLE, B.PUB_NAME, A.AUTHOR_NAME,C.NO_OF_COPIES,L.PROGRAMME_ID
-FROM BOOK B, BOOK_AUTHORS A, BOOK_COPIES C, LIBRARY_PROGRAMME L
-WHERE B.BOOK_ID=A.BOOK_ID
-AND B.BOOK_ID=C.BOOK_ID
-AND L.PROGRAMME_ID=C.PROGRAMME_ID;
+SELECT
+    B.Book_id,
+    B.Title,
+    B.Publisher_Name,
+    BA.Author_Name,
+    BC.Programme_id,
+    BC.No_of_Copies
+FROM
+    BOOK B
+JOIN
+    BOOK_AUTHORS BA ON B.Book_id = BA.Book_id
+JOIN
+    BOOK_COPIES BC ON B.Book_id = BC.Book_id;
 
 ---------------------------------------------
 
