@@ -10,13 +10,13 @@ WHERE SS.Sem = 4 AND SS.Sec = 'C';
 ----------------------------------------
 
 --Compute the total number of male and female students in each semester and in each section.
-
-SELECT SS.SEM, SS.SEC, S.GENDER, COUNT(S.GENDER) AS COUNT
-FROM STUDENT S, SEMSEC SS, CLASS C
-WHERE S.USN = C.USN AND
-SS.SSID = C.SSID
-GROUP BY SS.SEM, SS.SEC, S.GENDER
-ORDER BY SEM;
+SELECT SS.Sem, SS.Sec, 
+       SUM(S.Gender = 'Male') AS MaleCount,
+       SUM(S.Gender = 'Female') AS FemaleCount
+FROM STUDENT S
+JOIN CLASS C ON S.USN = C.USN
+JOIN SEMSEC SS ON C.SSID = SS.SSID
+GROUP BY SS.Sem, SS.Sec;
 
 ----------------------------------------
 
