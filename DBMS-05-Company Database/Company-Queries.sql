@@ -19,10 +19,16 @@ WHERE SSN IN (
 
 --Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department
 
-SELECT SUM(E.SALARY), MAX(E.SALARY), MIN(E.SALARY), AVG(E.SALARY)
-FROM EMPLOYEE E, DEPARTMENT D
-WHERE E.DNO=D.DNO
-AND D.DNAME='ACCOUNTS';
+SELECT
+    SUM(E.Salary) AS TotalSalary,
+    MAX(E.Salary) AS MaxSalary,
+    MIN(E.Salary) AS MinSalary,
+    AVG(E.Salary) AS AvgSalary
+FROM
+    EMPLOYEE E
+    JOIN DEPARTMENT D ON E.DNo = D.DNo
+WHERE
+    D.DName = 'Accounts';
 
 --Retrieve the name of each employee who works on all the projects controlled by department number 5 (use NOT EXISTS operator).
 
