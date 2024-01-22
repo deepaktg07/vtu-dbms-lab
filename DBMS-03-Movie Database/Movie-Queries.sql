@@ -39,12 +39,11 @@ WHERE M.MOV_YEAR NOT BETWEEN 2000 AND 2015;
 --and find the highest number of stars that movie received. Sort the result by
 --movie title.
 
-SELECT MOV_TITLE,MAX(REV_STARS)
-FROM MOVIES
-INNER JOIN RATING USING (MOV_ID)
-GROUP BY MOV_TITLE
-HAVING MAX(REV_STARS)>0
-ORDER BY MOV_TITLE;
+SELECT M.Mov_Title, MAX(R.Rev_Stars) AS MaxStars
+FROM MOVIES M
+JOIN RATING R ON M.Mov_id = R.Mov_id
+GROUP BY M.Mov_Title
+ORDER BY M.Mov_Title;
 
 ---------------------------------
 
